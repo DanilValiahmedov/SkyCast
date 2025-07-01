@@ -11,12 +11,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.valimade.skycast.di.httpClientModule
 import com.valimade.skycast.ui.theme.SkyCastTheme
+import com.valimade.skycast.weather.di.weatherModule
+import org.koin.core.context.startKoin
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        startKoin {
+            modules(
+                httpClientModule,
+                weatherModule,
+            )
+        }
+
         setContent {
             SkyCastTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
