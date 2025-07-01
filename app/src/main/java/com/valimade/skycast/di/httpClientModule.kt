@@ -12,9 +12,11 @@ import kotlinx.serialization.json.Json
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
+val nameWeather = named("WEATHER")
+
 val httpClientModule = module {
 
-    single<HttpClient>(named("WEATHER")) {
+    single<HttpClient>(nameWeather) {
         HttpClient(Android) {
             install(ContentNegotiation) {
                 json(Json {
