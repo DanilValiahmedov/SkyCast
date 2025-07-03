@@ -7,6 +7,7 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
+import io.ktor.http.URLProtocol
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.qualifier.named
@@ -24,7 +25,10 @@ val httpClientModule = module {
                 })
             }
             defaultRequest {
-                url("https://api.tomorrow.io/v4/weather")
+                url {
+                    protocol = URLProtocol.HTTPS
+                    host = "api.tomorrow.io"
+                }
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
             }
         }

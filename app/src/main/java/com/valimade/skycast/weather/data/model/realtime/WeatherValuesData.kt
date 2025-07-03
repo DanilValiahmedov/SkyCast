@@ -13,7 +13,7 @@ data class WeatherValuesData(
     @SerialName("humidity") val humidity: Int,
     @SerialName("precipitationProbability") val precipitationProbability: Int,
     @SerialName("pressureSurfaceLevel") val pressureSurfaceLevel: Double,
-    @SerialName("rainIntensity") val rainIntensity: Int,
+    @SerialName("rainIntensity") val rainIntensity: Double,
     @SerialName("sleetIntensity") val sleetIntensity: Int,
     @SerialName("snowIntensity") val snowIntensity: Int,
     @SerialName("temperature") val temperature: Double,

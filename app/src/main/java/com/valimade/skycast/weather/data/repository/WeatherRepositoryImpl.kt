@@ -17,7 +17,7 @@ class WeatherRepositoryImpl(
 
     override suspend fun realtimeWeather(location: String): WeatherResponse? {
         return try {
-            val responseWeather = httpClient.get("/realtime") {
+            val responseWeather = httpClient.get("/v4/weather/realtime") {
                 parameter("location", location)
                 parameter("apikey", apikey)
             }.body<WeatherResponseData>()
@@ -26,7 +26,6 @@ class WeatherRepositoryImpl(
         } catch (e: Exception) {
             null
         }
-
     }
 
 }

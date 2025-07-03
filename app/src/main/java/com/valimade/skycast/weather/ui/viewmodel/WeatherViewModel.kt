@@ -27,7 +27,7 @@ class WeatherViewModel(
                 )
             }
 
-            val location = "$lat, $lon"
+            val location = "$lat,$lon"
             val weatherDomain = realtimeWeatherUseCase(location)
             if(weatherDomain != null) {
 
