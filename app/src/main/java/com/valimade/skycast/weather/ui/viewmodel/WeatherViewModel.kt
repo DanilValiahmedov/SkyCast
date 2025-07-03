@@ -15,13 +15,13 @@ class WeatherViewModel(
     private val mapper: WeatherUIMapper,
 ): ViewModel() {
 
-    private val _weather = MutableStateFlow(WeatherScreenState())
+    private val _weatherState = MutableStateFlow(WeatherScreenState())
 
-    val weather: StateFlow<WeatherScreenState> = _weather
+    val weatherState: StateFlow<WeatherScreenState> = _weatherState
 
     fun getRealtimeWeather(lat: Double, lon: Double) {
         viewModelScope.launch {
-            _weather.update {
+            _weatherState.update {
                 it.copy(
                     isLoading = true,
                 )
@@ -32,7 +32,7 @@ class WeatherViewModel(
             if(weatherDomain != null) {
 
                 val weatherUI = mapper.weatherResponseDomainToUI(weatherDomain)
-                _weather.update {
+                _weatherState.update {
                     it.copy(
                         isLoading = false,
                         weather = weatherUI,
@@ -40,7 +40,7 @@ class WeatherViewModel(
                 }
 
             } else {
-                _weather.update {
+                _weatherState.update {
                     it.copy(
                         isLoading = false,
                         isError = true,
