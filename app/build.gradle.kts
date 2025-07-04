@@ -52,6 +52,9 @@ android {
 
 dependencies {
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2")
+    implementation(libs.play.services.location)
+
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.koin.androidx.navigation)
