@@ -35,7 +35,7 @@ fun WeatherInfoItem(
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "${item.name} :",
+            text = "${item.name}:",
             color = Color.White,
             fontSize = 16.sp,
         )

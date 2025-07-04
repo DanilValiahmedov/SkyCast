@@ -1,0 +1,203 @@
+package com.valimade.skycast.weather.ui.screenelement
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.valimade.skycast.R
+import com.valimade.skycast.ui.theme.primaryColor
+import com.valimade.skycast.ui.theme.secondaryColor
+import com.valimade.skycast.weather.ui.model.DataInfoItem
+import com.valimade.skycast.weather.ui.model.WeatherScreenState
+
+@Composable
+fun CardWeather(
+    weatherState: WeatherScreenState,
+    nameCard: String,
+) {
+    var isCardOpen by remember { mutableStateOf(false) }
+
+    val weatherList = remember(weatherState) { mutableStateListOf(
+        DataInfoItem(
+            icon = R.drawable.ic_temperature,
+            name = "Температура",
+            value = weatherState.weather.data.values.temperature.toString(),
+            units = "°C",
+        ),
+        DataInfoItem(
+            icon = R.drawable.ic_pressure,
+            name = "Давление",
+            value = weatherState.weather.data.values.pressureSurfaceLevel.toString(),
+            units = "гПа",
+        ),
+        DataInfoItem(
+            icon = R.drawable.ic_humidity,
+            name = "Влажность",
+            value = weatherState.weather.data.values.humidity.toString(),
+            units = "%",
+        ),
+        DataInfoItem(
+            icon = R.drawable.ic_wind,
+            name = "Скорость ветра",
+            value = weatherState.weather.data.values.windSpeed.toString(),
+            units = "м/с",
+        ),
+    ) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = primaryColor, shape = RoundedCornerShape(20.dp))
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = nameCard,
+            color = secondaryColor,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        WeatherInfoGrid(listItem = weatherList)
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ){
+                    isCardOpen = !isCardOpen
+                },
+            horizontalArrangement = Arrangement.End
+        ) {
+            Text(
+                text = "Подробнее",
+                color = Color.Black,
+                fontSize = 14.sp,
+            )
+
+            Icon(
+                imageVector = Icons.Default.KeyboardArrowDown,
+                contentDescription = "Подробнее",
+                tint = Color.Black,
+                modifier = Modifier.size(20.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        if(isCardOpen) {
+            FullWeatherItem(
+                name = "Ощуение температуры",
+                value = weatherState.weather.data.values.temperatureApparent.toString(),
+                units = "°C",
+            )
+
+            FullWeatherItem(
+                name = "Точка росы",
+                value = weatherState.weather.data.values.dewPoint.toString(),
+                units = "°C",
+            )
+
+            FullWeatherItem(
+                name = "MAX скорость ветра",
+                value = weatherState.weather.data.values.windGust.toString(),
+                units = "м/c",
+            )
+
+            FullWeatherItem(
+                name = "Интенсивность осадков",
+                value = weatherState.weather.data.values.rainIntensity.toString(),
+                units = "мм/ч",
+            )
+
+            FullWeatherItem(
+                name = "Интенсивность замерших осадков",
+                value = weatherState.weather.data.values.freezingRainIntensity.toString(),
+                units = "мм/ч",
+            )
+
+            FullWeatherItem(
+                name = "Интенсивность снегопада",
+                value = weatherState.weather.data.values.snowIntensity.toString(),
+                units = "мм/ч",
+            )
+
+            FullWeatherItem(
+                name = "Интенсивность мокрого снега",
+                value = weatherState.weather.data.values.sleetIntensity.toString(),
+                units = "мм/ч",
+            )
+
+            FullWeatherItem(
+                name = "Вероятность выпадения осадков",
+                value = weatherState.weather.data.values.precipitationProbability.toString(),
+                units = "%",
+            )
+
+            FullWeatherItem(
+                name = "Видимость",
+                value = weatherState.weather.data.values.visibility.toString(),
+                units = "км",
+            )
+
+            FullWeatherItem(
+                name = "Покрытие облаками",
+                value = weatherState.weather.data.values.cloudCover.toString(),
+                units = "%",
+            )
+
+            FullWeatherItem(
+                name = "MIN высота до облаков",
+                value = weatherState.weather.data.values.cloudBase.toString(),
+                units = "км",
+            )
+
+            FullWeatherItem(
+                name = "MAX высота до облаков",
+                value = weatherState.weather.data.values.cloudCeiling.toString(),
+                units = "км",
+            )
+
+            FullWeatherItem(
+                name = "Ультрафиолетовый индекс",
+                value = weatherState.weather.data.values.uvIndex.toString(),
+                units = "из 11",
+            )
+
+            FullWeatherItem(
+                name = "Влияние УФ.индекса",
+                value = weatherState.weather.data.values.uvHealthConcern.toString(),
+                units = "из 11",
+            )
+        }
+
+    }
+}
