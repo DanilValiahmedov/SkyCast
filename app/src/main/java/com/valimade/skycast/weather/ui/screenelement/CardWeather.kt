@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,6 +40,7 @@ import com.valimade.skycast.weather.ui.model.WeatherScreenState
 fun CardWeather(
     weatherState: WeatherScreenState,
     nameCard: String,
+    onUpdate: () -> Unit,
 ) {
     var isCardOpen by remember { mutableStateOf(false) }
 
@@ -93,18 +96,50 @@ fun CardWeather(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() }
                 ){
-                    isCardOpen = !isCardOpen
+                    onUpdate()
                 },
-            horizontalArrangement = Arrangement.End
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "Подробнее",
+                text = "Обновлено: ${weatherState.weather.data.time}",
+                color = Color.Black,
+                fontSize = 14.sp,
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Icon(
+                imageVector = Icons.Default.Refresh,
+                contentDescription = "Обновить",
+                tint = Color.Black,
+                modifier = Modifier.size(20.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ){
+                    isCardOpen = !isCardOpen
+                },
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = if(isCardOpen) "Скрыть"
+                    else "Подробнее",
                 color = Color.Black,
                 fontSize = 14.sp,
             )
 
             Icon(
-                imageVector = Icons.Default.KeyboardArrowDown,
+                imageVector = if(isCardOpen) Icons.Default.KeyboardArrowUp
+                else Icons.Default.KeyboardArrowDown,
                 contentDescription = "Подробнее",
                 tint = Color.Black,
                 modifier = Modifier.size(20.dp)

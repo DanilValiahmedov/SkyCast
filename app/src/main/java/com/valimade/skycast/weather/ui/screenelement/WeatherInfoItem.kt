@@ -12,8 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.valimade.skycast.ui.theme.secondaryColor
 import com.valimade.skycast.weather.ui.model.DataInfoItem
 
 @Composable
@@ -38,13 +40,14 @@ fun WeatherInfoItem(
             text = "${item.name}:",
             color = Color.White,
             fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             text = "${item.value} ${item.units}",
-            color = Color.White,
+            color = secondaryColor,
             fontSize = 16.sp,
         )
 

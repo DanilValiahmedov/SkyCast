@@ -6,6 +6,9 @@ import com.valimade.skycast.weather.domain.model.realtime.WeatherValues
 import com.valimade.skycast.weather.ui.model.realtime.WeatherResponseUI
 import com.valimade.skycast.weather.ui.model.realtime.WeatherUI
 import com.valimade.skycast.weather.ui.model.realtime.WeatherValuesUI
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 object WeatherUIMapper {
 
@@ -30,9 +33,20 @@ object WeatherUIMapper {
 
     private fun weatherDomainToUI(weather: Weather): WeatherUI {
         return WeatherUI(
-            time = weather.time,
+            time = timeFormat(weather.time),
             values = weatherValuesDomainToUI(weather.values),
         )
+    }
+
+    private fun timeFormat(time: String): String{
+        return try {
+            val instant = Instant.parse(time)
+            val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
+                .withZone(ZoneId.systemDefault())
+            formatter.format(instant)
+        } catch (_: Exception) {
+            ""
+        }
     }
 
     private fun weatherValuesUIToDomain(weatherValues: WeatherValuesUI): WeatherValues {

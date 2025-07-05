@@ -2,7 +2,6 @@ package com.valimade.skycast.weather.ui.screen
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -35,7 +34,9 @@ import com.valimade.skycast.R
 import com.valimade.skycast.ui.theme.primaryColor
 import com.valimade.skycast.weather.ui.screenelement.CardWeather
 import com.valimade.skycast.weather.ui.viewmodel.WeatherViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -45,6 +46,7 @@ fun WeatherScreen() {
 
     val viewModel: WeatherViewModel = koinViewModel()
     val weatherState by viewModel.weatherState.collectAsState()
+    var isGetWeather by remember { mutableStateOf(true) }
 
     val locationClient = remember(context) {
         LocationServices.getFusedLocationProviderClient(context)
@@ -74,10 +76,13 @@ fun WeatherScreen() {
     }
 
     // Получение геолокации при наличии разрешения
-    LaunchedEffect(permissionGranted) {
-        if (permissionGranted) {
+    LaunchedEffect(permissionGranted && isGetWeather) {
+        if (permissionGranted && isGetWeather) {
+            isGetWeather = false
             try {
-                val location = locationClient.lastLocation.await()
+                val location = withContext(Dispatchers.IO) {
+                    locationClient.lastLocation.await()
+                }
                 location?.let {
                     viewModel.getRealtimeWeather(it.latitude, it.longitude)
                 }
@@ -111,12 +116,13 @@ fun WeatherScreen() {
         } else if(weatherState.isError) {
             Toast.makeText(context, "Возникла ошибка, попробуйте позже", Toast.LENGTH_SHORT).show()
         } else {
-
             CardWeather(
                 weatherState = weatherState,
                 nameCard = "Текущее положение",
+                onUpdate = {
+                    isGetWeather = true
+                }
             )
-
         }
     }
 }
