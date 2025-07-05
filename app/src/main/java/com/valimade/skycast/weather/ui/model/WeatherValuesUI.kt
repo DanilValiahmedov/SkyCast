@@ -1,4 +1,4 @@
-package com.valimade.skycast.weather.ui.model.realtime
+package com.valimade.skycast.weather.ui.model
 
 data class WeatherValuesUI(
     val cloudBase: Double? = 0.0,

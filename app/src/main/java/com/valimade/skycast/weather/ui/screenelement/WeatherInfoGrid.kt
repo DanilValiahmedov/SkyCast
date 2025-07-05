@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.valimade.skycast.weather.ui.model.DataInfoItem
+import com.valimade.skycast.weather.ui.model.item.DataInfoItem
 
 @Composable
 fun WeatherInfoGrid(

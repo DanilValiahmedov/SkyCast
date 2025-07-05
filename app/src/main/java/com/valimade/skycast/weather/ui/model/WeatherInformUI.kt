@@ -1,6 +1,6 @@
-package com.valimade.skycast.weather.ui.model.realtime
+package com.valimade.skycast.weather.ui.model
 
-data class WeatherUI(
+data class WeatherInformUI(
     val time: String = "",
     val values: WeatherValuesUI = WeatherValuesUI()
 )

@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.valimade.skycast.ui.theme.secondaryColor
-import com.valimade.skycast.weather.ui.model.DataInfoItem
+import com.valimade.skycast.weather.ui.model.item.DataInfoItem
 
 @Composable
 fun WeatherInfoItem(

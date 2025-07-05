@@ -1,4 +1,4 @@
-package com.valimade.skycast.weather.domain.model.realtime
+package com.valimade.skycast.weather.domain.model
 
 data class WeatherValues(
     val cloudBase: Double?,

@@ -1,4 +1,4 @@
-package com.valimade.skycast.weather.ui.model
+package com.valimade.skycast.weather.ui.model.item
 
 data class DataInfoItem(
     val icon: Int,

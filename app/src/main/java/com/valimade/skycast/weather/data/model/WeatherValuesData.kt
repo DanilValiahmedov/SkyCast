@@ -1,4 +1,4 @@
-package com.valimade.skycast.weather.data.model.realtime
+package com.valimade.skycast.weather.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

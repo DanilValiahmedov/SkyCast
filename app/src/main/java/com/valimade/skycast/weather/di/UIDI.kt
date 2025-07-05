@@ -14,6 +14,7 @@ val uiModule = module {
      viewModel<WeatherViewModel>{
         WeatherViewModel(
             realtimeWeatherUseCase = get(),
+            forecastWeatherUseCase = get(),
             mapper = get(),
         )
     }
