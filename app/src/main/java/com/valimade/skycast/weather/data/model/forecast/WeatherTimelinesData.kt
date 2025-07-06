@@ -6,6 +6,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class WeatherTimelinesData(
-    @SerialName("daily") val daily: List<WeatherInformData>,
     @SerialName("hourly") val hourly: List<WeatherInformData>,
 )

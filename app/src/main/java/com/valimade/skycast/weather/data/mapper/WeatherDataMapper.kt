@@ -27,9 +27,6 @@ object WeatherDataMapper {
 
     private fun weatherTimelinesDataToDomain(weatherTimelines: WeatherTimelinesData): WeatherTimelines {
         return WeatherTimelines(
-            daily = weatherTimelines.daily.map {
-                weatherInformDataToDomain(it)
-            },
             hourly = weatherTimelines.hourly.map {
                 weatherInformDataToDomain(it)
             },
@@ -38,9 +35,6 @@ object WeatherDataMapper {
 
     private fun weatherTimelinesDomainToData(weatherTimelines: WeatherTimelines): WeatherTimelinesData {
         return WeatherTimelinesData(
-            daily = weatherTimelines.daily.map {
-                weatherInformDomainToData(it)
-            },
             hourly = weatherTimelines.hourly.map {
                 weatherInformDomainToData(it)
             },

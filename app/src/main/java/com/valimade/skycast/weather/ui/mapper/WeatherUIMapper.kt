@@ -30,9 +30,6 @@ object WeatherUIMapper {
 
     private fun weatherTimelinesUIToDomain(weatherTimelines: WeatherTimelinesUI): WeatherTimelines {
         return WeatherTimelines(
-            daily = weatherTimelines.daily.map {
-                weatherInformUIToDomain(it)
-            },
             hourly = weatherTimelines.hourly.map {
                 weatherInformUIToDomain(it)
             },
@@ -41,9 +38,6 @@ object WeatherUIMapper {
 
     private fun weatherTimelinesDomainToUI(weatherTimelines: WeatherTimelines): WeatherTimelinesUI {
         return WeatherTimelinesUI(
-            daily = weatherTimelines.daily.map {
-                weatherInformDomainToUI(it)
-            },
             hourly = weatherTimelines.hourly.map {
                 weatherInformDomainToUI(it)
             },
@@ -64,26 +58,28 @@ object WeatherUIMapper {
 
     private fun weatherInformUIToDomain(weatherInform: WeatherInformUI): WeatherInform {
         return WeatherInform(
-            time = weatherInform.time,
+            time = "${weatherInform.date} ${weatherInform.time}",
             values = weatherValuesUIToDomain(weatherInform.values),
         )
     }
 
     private fun weatherInformDomainToUI(weatherInform: WeatherInform): WeatherInformUI {
         return WeatherInformUI(
-            time = timeFormat(weatherInform.time),
+            date = timeFormat(weatherInform.time)[0],
+            time = timeFormat(weatherInform.time)[1],
             values = weatherValuesDomainToUI(weatherInform.values),
         )
     }
 
-    private fun timeFormat(time: String): String{
+    private fun timeFormat(time: String): List<String>{
         return try {
             val instant = Instant.parse(time)
             val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
                 .withZone(ZoneId.systemDefault())
-            formatter.format(instant)
+            val listTime = formatter.format(instant).split(" ")
+            listTime
         } catch (_: Exception) {
-            ""
+            listOf("", "")
         }
     }
 

@@ -85,6 +85,7 @@ fun WeatherScreen() {
                 }
                 location?.let {
                     viewModel.getRealtimeWeather(it.latitude, it.longitude)
+                    viewModel.getForecastWeather(it.latitude, it.longitude)
                 }
             } catch (e: Exception) {
                 Toast.makeText(context, "Ошибка при получении геолокации", Toast.LENGTH_SHORT).show()

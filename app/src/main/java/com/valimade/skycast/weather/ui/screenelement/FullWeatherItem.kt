@@ -12,26 +12,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.valimade.skycast.ui.theme.secondaryColor
+import com.valimade.skycast.weather.ui.model.item.DataInfoItem
 
 @Composable
 fun FullWeatherItem(
-    name: String,
-    value: String,
-    units: String,
+    item: DataInfoItem,
 ) {
-    if(!(value == "0.0" || value == "0" || value == "null")) {
+    if(!(item.value == "0.0" || item.value == "0" || item.value == "null")) {
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = "$name: ",
+                text = "${item.name}: ",
                 color = Color.White,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
             )
 
             Text(
-                text = "$value $units",
+                text = "${item.value} ${item.units}",
                 color = secondaryColor,
                 fontSize = 14.sp,
             )
