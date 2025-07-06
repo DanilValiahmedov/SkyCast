@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,13 +25,12 @@ fun ForecastCard(
 ) {
     Column(
         modifier = Modifier
+            .fillMaxWidth()
             .background(color, shape = RoundedCornerShape(24.dp))
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Spacer(modifier = Modifier.height(8.dp))
-
         WeatherInfoItem(item)
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -49,7 +49,5 @@ fun ForecastCard(
             color = Color.White,
             fontSize = 14.sp,
         )
-
-        Spacer(modifier = Modifier.height(8.dp))
     }
 }
