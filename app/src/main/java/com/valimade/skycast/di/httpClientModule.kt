@@ -14,6 +14,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val nameWeather = named("WEATHER")
+val nameGeocoding = named("GEOCODING")
 
 val httpClientModule = module {
 
@@ -28,6 +29,23 @@ val httpClientModule = module {
                 url {
                     protocol = URLProtocol.HTTPS
                     host = "api.tomorrow.io"
+                }
+                header(HttpHeaders.ContentType, ContentType.Application.Json)
+            }
+        }
+    }
+
+    single<HttpClient>(nameGeocoding) {
+        HttpClient(Android) {
+            install(ContentNegotiation) {
+                json(Json {
+                    ignoreUnknownKeys = true
+                })
+            }
+            defaultRequest {
+                url {
+                    protocol = URLProtocol.HTTPS
+                    host = "api.geoapify.com"
                 }
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
             }

@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.valimade.skycast.di.httpClientModule
+import com.valimade.skycast.geocoding.di.geocodingModule
 import com.valimade.skycast.ui.theme.SkyCastTheme
 import com.valimade.skycast.weather.di.weatherModule
 import com.valimade.skycast.weather.ui.screen.WeatherScreen
@@ -26,6 +27,7 @@ class MainActivity : ComponentActivity() {
             modules(
                 httpClientModule,
                 weatherModule,
+                geocodingModule,
             )
         }
 

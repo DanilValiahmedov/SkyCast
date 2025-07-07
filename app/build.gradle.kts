@@ -11,6 +11,7 @@ val localProperties = Properties()
 localProperties.load(File(rootDir, "local.properties").inputStream())
 
 val tomorrowApiKey = localProperties["TOMORROW_API_KEY"] as String
+val geoapifyApiKey = localProperties["GEOAPIFY_API_KEY"] as String
 
 android {
     namespace = "com.valimade.skycast"
@@ -26,6 +27,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "TOMORROW_API_KEY", "\"$tomorrowApiKey\"")
+        buildConfigField("String", "GEOAPIFY_API_KEY", "\"$geoapifyApiKey\"")
     }
 
     buildTypes {
