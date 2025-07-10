@@ -17,34 +17,14 @@ object GeocodingDataMapper {
         )
     }
 
-    fun reverseDomainToData(reverse: GeocodingReverse): GeocodingReverseData {
-        return GeocodingReverseData(
-            features = reverse.features.map {
-                featuresDomainToData(it)
-            },
-        )
-    }
-
     private fun featuresDataToDomain(features: GeocodingFeaturesData): GeocodingFeatures {
         return GeocodingFeatures(
             properties = propertiesDataToDomain(features.properties),
         )
     }
-    private fun featuresDomainToData(features: GeocodingFeatures): GeocodingFeaturesData {
-        return GeocodingFeaturesData(
-            properties = propertiesDomainToData(features.properties),
-        )
-    }
 
     private fun propertiesDataToDomain(properties: GeocodingPropertiesData): GeocodingProperties {
         return GeocodingProperties(
-            country = properties.country,
-            state = properties.state,
-            city = properties.city,
-        )
-    }
-    private fun propertiesDomainToData(properties: GeocodingProperties): GeocodingPropertiesData {
-        return GeocodingPropertiesData(
             country = properties.country,
             state = properties.state,
             city = properties.city,

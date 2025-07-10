@@ -86,6 +86,7 @@ fun WeatherScreen() {
                 location?.let {
                     viewModel.getRealtimeWeather(it.latitude, it.longitude)
                     viewModel.getForecastWeather(it.latitude, it.longitude)
+                    viewModel.getReverseGeocoding(it.latitude, it.longitude)
                 }
             } catch (e: Exception) {
                 Toast.makeText(context, "Ошибка при получении геолокации", Toast.LENGTH_SHORT).show()
@@ -119,7 +120,7 @@ fun WeatherScreen() {
         } else {
             CardWeather(
                 weatherState = weatherState,
-                nameCard = "Текущее положение",
+                nameCard = "Текущее положение: ",
                 onUpdate = {
                     isGetWeather = true
                 }

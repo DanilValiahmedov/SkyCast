@@ -19,24 +19,10 @@ object WeatherDataMapper {
         )
     }
 
-    fun weatherForecastDomainToData(weatherForecast: WeatherForecast): WeatherForecastData {
-        return WeatherForecastData(
-            timelines = weatherTimelinesDomainToData(weatherForecast.timelines),
-        )
-    }
-
     private fun weatherTimelinesDataToDomain(weatherTimelines: WeatherTimelinesData): WeatherTimelines {
         return WeatherTimelines(
             hourly = weatherTimelines.hourly.map {
                 weatherInformDataToDomain(it)
-            },
-        )
-    }
-
-    private fun weatherTimelinesDomainToData(weatherTimelines: WeatherTimelines): WeatherTimelinesData {
-        return WeatherTimelinesData(
-            hourly = weatherTimelines.hourly.map {
-                weatherInformDomainToData(it)
             },
         )
     }
@@ -47,12 +33,6 @@ object WeatherDataMapper {
         )
     }
 
-    fun weatherRealtimeDomainToData(weatherRealtime: WeatherRealtime): WeatherRealtimeData {
-        return WeatherRealtimeData(
-            data = weatherInformDomainToData(weatherRealtime.data),
-        )
-    }
-
     private fun weatherInformDataToDomain(weatherInform: WeatherInformData): WeatherInform {
         return WeatherInform(
             time = weatherInform.time,
@@ -60,40 +40,8 @@ object WeatherDataMapper {
         )
     }
 
-    private fun weatherInformDomainToData(weatherInform: WeatherInform): WeatherInformData {
-        return WeatherInformData(
-            time = weatherInform.time,
-            values = weatherValuesDomainToData(weatherInform.values),
-        )
-    }
-
     private fun weatherValuesDataToDomain(weatherValues: WeatherValuesData): WeatherValues {
         return WeatherValues(
-            cloudBase = weatherValues.cloudBase,
-            cloudCeiling = weatherValues.cloudCeiling,
-            cloudCover = weatherValues.cloudCover,
-            dewPoint = weatherValues.dewPoint,
-            freezingRainIntensity = weatherValues.freezingRainIntensity,
-            humidity = weatherValues.humidity,
-            precipitationProbability = weatherValues.precipitationProbability,
-            pressureSurfaceLevel = weatherValues.pressureSurfaceLevel,
-            rainIntensity = weatherValues.rainIntensity,
-            sleetIntensity = weatherValues.sleetIntensity,
-            snowIntensity = weatherValues.snowIntensity,
-            temperature = weatherValues.temperature,
-            temperatureApparent = weatherValues.temperatureApparent,
-            uvHealthConcern = weatherValues.uvHealthConcern,
-            uvIndex = weatherValues.uvIndex,
-            visibility = weatherValues.visibility,
-            weatherCode = weatherValues.weatherCode,
-            windDirection = weatherValues.windDirection,
-            windGust = weatherValues.windGust,
-            windSpeed = weatherValues.windSpeed,
-        )
-    }
-
-    private fun weatherValuesDomainToData(weatherValues: WeatherValues): WeatherValuesData {
-        return WeatherValuesData(
             cloudBase = weatherValues.cloudBase,
             cloudCeiling = weatherValues.cloudCeiling,
             cloudCover = weatherValues.cloudCover,

@@ -2,6 +2,8 @@ package com.valimade.skycast.weather.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.valimade.skycast.geocoding.domain.usecase.ReverseGeocodingUseCase
+import com.valimade.skycast.geocoding.ui.mapper.GeocodingUIMapper
 import com.valimade.skycast.weather.domain.usecase.ForecastWeatherUseCase
 import com.valimade.skycast.weather.domain.usecase.RealtimeWeatherUseCase
 import com.valimade.skycast.weather.ui.mapper.WeatherUIMapper
@@ -14,7 +16,9 @@ import kotlinx.coroutines.launch
 class WeatherViewModel(
     private val realtimeWeatherUseCase: RealtimeWeatherUseCase,
     private val forecastWeatherUseCase: ForecastWeatherUseCase,
-    private val mapper: WeatherUIMapper,
+    private val reverseGeocodingUseCase: ReverseGeocodingUseCase,
+    private val weatherMapper: WeatherUIMapper,
+    private val geocodingMapper: GeocodingUIMapper,
 ): ViewModel() {
 
     private val _weatherState = MutableStateFlow(WeatherScreenState())
@@ -33,7 +37,7 @@ class WeatherViewModel(
             val weatherDomain = realtimeWeatherUseCase(location)
             if(weatherDomain != null) {
 
-                val weatherUI = mapper.weatherRealtimeDomainToUI(weatherDomain)
+                val weatherUI = weatherMapper.weatherRealtimeDomainToUI(weatherDomain)
                 _weatherState.update {
                     it.copy(
                         isLoading = false,
@@ -65,11 +69,42 @@ class WeatherViewModel(
             val weatherDomain = forecastWeatherUseCase(location)
             if(weatherDomain != null) {
 
-                val weatherUI = mapper.weatherForecastDomainToUI(weatherDomain)
+                val weatherUI = weatherMapper.weatherForecastDomainToUI(weatherDomain)
                 _weatherState.update {
                     it.copy(
                         isLoading = false,
                         weatherForecast = weatherUI,
+                    )
+                }
+
+            } else {
+                _weatherState.update {
+                    it.copy(
+                        isLoading = false,
+                        isError = true,
+                    )
+                }
+            }
+
+        }
+    }
+
+    fun getReverseGeocoding(lat: Double, lon: Double) {
+        viewModelScope.launch {
+            _weatherState.update {
+                it.copy(
+                    isLoading = true,
+                )
+            }
+
+            val geocodingDomain = reverseGeocodingUseCase(lat, lon)
+            if(geocodingDomain != null) {
+
+                val geocodingUI = geocodingMapper.reverseDomainToUI(geocodingDomain)
+                _weatherState.update {
+                    it.copy(
+                        isLoading = false,
+                        geocodingReverse = geocodingUI
                     )
                 }
 

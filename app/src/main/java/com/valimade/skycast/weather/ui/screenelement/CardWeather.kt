@@ -154,6 +154,18 @@ fun CardWeather(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        Text(
+            text =
+                "${weatherState.geocodingReverse.features[0].properties.city} " +
+                "(${weatherState.geocodingReverse.features[0].properties.state}, " +
+                "(${weatherState.geocodingReverse.features[0].properties.country})",
+            color = secondaryColor,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         WeatherInfoGrid(listItem = weatherBaseList)
 
         Row(

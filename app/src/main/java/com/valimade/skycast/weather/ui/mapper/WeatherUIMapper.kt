@@ -16,23 +16,9 @@ import java.time.format.DateTimeFormatter
 
 object WeatherUIMapper {
 
-    fun weatherForecastUIToDomain(weatherForecast: WeatherForecastUI): WeatherForecast {
-        return WeatherForecast(
-            timelines = weatherTimelinesUIToDomain(weatherForecast.timelines),
-        )
-    }
-
     fun weatherForecastDomainToUI(weatherForecast: WeatherForecast): WeatherForecastUI {
         return WeatherForecastUI(
             timelines = weatherTimelinesDomainToUI(weatherForecast.timelines),
-        )
-    }
-
-    private fun weatherTimelinesUIToDomain(weatherTimelines: WeatherTimelinesUI): WeatherTimelines {
-        return WeatherTimelines(
-            hourly = weatherTimelines.hourly.map {
-                weatherInformUIToDomain(it)
-            },
         )
     }
 
@@ -44,22 +30,9 @@ object WeatherUIMapper {
         )
     }
 
-    fun weatherRealtimeUIToDomain(weatherRealtime: WeatherRealtimeUI): WeatherRealtime {
-        return WeatherRealtime(
-            data = weatherInformUIToDomain(weatherRealtime.data),
-        )
-    }
-
     fun weatherRealtimeDomainToUI(weatherRealtime: WeatherRealtime): WeatherRealtimeUI {
         return WeatherRealtimeUI(
             data = weatherInformDomainToUI(weatherRealtime.data),
-        )
-    }
-
-    private fun weatherInformUIToDomain(weatherInform: WeatherInformUI): WeatherInform {
-        return WeatherInform(
-            time = "${weatherInform.date} ${weatherInform.time}",
-            values = weatherValuesUIToDomain(weatherInform.values),
         )
     }
 
@@ -81,31 +54,6 @@ object WeatherUIMapper {
         } catch (_: Exception) {
             listOf("", "")
         }
-    }
-
-    private fun weatherValuesUIToDomain(weatherValues: WeatherValuesUI): WeatherValues {
-        return WeatherValues(
-            cloudBase = weatherValues.cloudBase,
-            cloudCeiling = weatherValues.cloudCeiling,
-            cloudCover = weatherValues.cloudCover,
-            dewPoint = weatherValues.dewPoint,
-            freezingRainIntensity = weatherValues.freezingRainIntensity,
-            humidity = weatherValues.humidity,
-            precipitationProbability = weatherValues.precipitationProbability,
-            pressureSurfaceLevel = weatherValues.pressureSurfaceLevel,
-            rainIntensity = weatherValues.rainIntensity,
-            sleetIntensity = weatherValues.sleetIntensity,
-            snowIntensity = weatherValues.snowIntensity,
-            temperature = weatherValues.temperature,
-            temperatureApparent = weatherValues.temperatureApparent,
-            uvHealthConcern = weatherValues.uvHealthConcern,
-            uvIndex = weatherValues.uvIndex,
-            visibility = weatherValues.visibility,
-            weatherCode = weatherValues.weatherCode,
-            windDirection = weatherValues.windDirection,
-            windGust = weatherValues.windGust,
-            windSpeed = weatherValues.windSpeed,
-        )
     }
 
     private fun weatherValuesDomainToUI(weatherValues: WeatherValues): WeatherValuesUI {
