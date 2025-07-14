@@ -11,25 +11,13 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.valimade.skycast.di.httpClientModule
-import com.valimade.skycast.geocoding.di.geocodingModule
 import com.valimade.skycast.ui.theme.SkyCastTheme
-import com.valimade.skycast.weather.di.weatherModule
 import com.valimade.skycast.weather.ui.screen.WeatherScreen
-import org.koin.core.context.startKoin
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        startKoin {
-            modules(
-                httpClientModule,
-                weatherModule,
-                geocodingModule,
-            )
-        }
 
         setContent {
             SkyCastTheme {
