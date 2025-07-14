@@ -1,6 +1,7 @@
 package com.valimade.skycast.geocoding.data.repository
 
 import com.valimade.skycast.geocoding.data.mapper.GeocodingDataMapper
+import com.valimade.skycast.geocoding.data.mock.GeocodingMock
 import com.valimade.skycast.geocoding.data.model.GeocodingReverseData
 import com.valimade.skycast.geocoding.domain.model.GeocodingReverse
 import com.valimade.skycast.geocoding.domain.repository.GeocodingRepository
@@ -19,11 +20,18 @@ class GeocodingRepositoryImpl(
         lat: Double, lon: Double
     ): GeocodingReverse? {
         return try {
+            //Реальная реализаиця
+            /*
             val response = httpClient.get("/v1/geocode/reverse") {
                 parameter("lat", lat)
                 parameter("lon", lon)
                 parameter("apiKey", apiKey)
             }.body<GeocodingReverseData>()
+
+             */
+
+            //Моковые данные
+            val response = GeocodingMock.responseReverse
 
             mapper.reverseDataToDomain(response)
         } catch(e: Exception) {

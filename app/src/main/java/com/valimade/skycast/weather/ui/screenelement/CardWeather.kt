@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.valimade.skycast.R
@@ -152,16 +153,16 @@ fun CardWeather(
             fontWeight = FontWeight.Bold,
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         Text(
             text =
                 "${weatherState.geocodingReverse.features[0].properties.city} " +
                 "(${weatherState.geocodingReverse.features[0].properties.state}, " +
-                "(${weatherState.geocodingReverse.features[0].properties.country})",
+                "${weatherState.geocodingReverse.features[0].properties.country})",
             color = secondaryColor,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
+            fontSize = 16.sp,
+            textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(16.dp))

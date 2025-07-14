@@ -1,6 +1,7 @@
 package com.valimade.skycast.weather.data.repository
 
 import com.valimade.skycast.weather.data.mapper.WeatherDataMapper
+import com.valimade.skycast.weather.data.mock.WeatherMock
 import com.valimade.skycast.weather.data.model.forecast.WeatherForecastData
 import com.valimade.skycast.weather.data.model.realtime.WeatherRealtimeData
 import com.valimade.skycast.weather.domain.model.forecast.WeatherForecast
@@ -19,10 +20,17 @@ class WeatherRepositoryImpl(
 
     override suspend fun realtimeWeather(location: String): WeatherRealtime? {
         return try {
+            //Реальная реализаиця
+            /*
             val responseWeather = httpClient.get("/v4/weather/realtime") {
                 parameter("location", location)
                 parameter("apikey", apikey)
             }.body<WeatherRealtimeData>()
+
+             */
+
+            //Моковые данные
+            val responseWeather = WeatherMock.responseRealtime
 
              mapper.weatherRealtimeDataToDomain(responseWeather)
         } catch (e: Exception) {
@@ -32,10 +40,16 @@ class WeatherRepositoryImpl(
 
     override suspend fun forecastWeather(location: String): WeatherForecast? {
         return try {
+            //Реальная реализаиця
+            /*
             val responseWeather = httpClient.get("/v4/weather/forecast") {
                 parameter("location", location)
                 parameter("apikey", apikey)
             }.body<WeatherForecastData>()
+            */
+
+            //Моковые данные
+            val responseWeather = WeatherMock.responseForecast
 
             mapper.weatherForecastDataToDomain(responseWeather)
         } catch (e: Exception) {
@@ -44,3 +58,4 @@ class WeatherRepositoryImpl(
     }
 
 }
+

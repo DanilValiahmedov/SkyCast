@@ -9,7 +9,7 @@ data class WeatherValues(
     val humidity: Int? = null,
     val precipitationProbability: Int? = null,
     val pressureSurfaceLevel: Double? = null,
-    val rainIntensity: Double? = null,
+    val rainIntensity: Int? = null,
     val sleetIntensity: Int? = null,
     val snowIntensity: Int? = null,
     val temperature: Double? = null,
