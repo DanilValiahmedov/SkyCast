@@ -37,7 +37,7 @@ class WeatherViewModel(
             val weatherDomain = realtimeWeatherUseCase(location)
             if(weatherDomain != null) {
 
-                val weatherUI = weatherMapper.weatherRealtimeDomainToUI(weatherDomain)
+                val weatherUI = weatherMapper.weatherInformDomainToUI(weatherDomain)
                 _weatherState.update {
                     it.copy(
                         isLoading = false,

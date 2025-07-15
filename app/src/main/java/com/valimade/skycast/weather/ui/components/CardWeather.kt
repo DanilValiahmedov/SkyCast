@@ -53,25 +53,25 @@ fun CardWeather(
         DataInfoItem(
             icon = R.drawable.ic_temperature,
             name = "Температура",
-            value = weatherState.weatherRealtime.data.values.temperature.toString(),
+            value = weatherState.weatherRealtime.values.temperature.toString(),
             units = "°C",
         ),
         DataInfoItem(
             icon = R.drawable.ic_pressure,
             name = "Давление",
-            value = weatherState.weatherRealtime.data.values.pressureSurfaceLevel.toString(),
+            value = weatherState.weatherRealtime.values.pressureSurfaceLevel.toString(),
             units = "гПа",
         ),
         DataInfoItem(
             icon = R.drawable.ic_humidity,
             name = "Влажность",
-            value = weatherState.weatherRealtime.data.values.humidity.toString(),
+            value = weatherState.weatherRealtime.values.humidity.toString(),
             units = "%",
         ),
         DataInfoItem(
             icon = R.drawable.ic_wind,
             name = "Скорость ветра",
-            value = weatherState.weatherRealtime.data.values.windSpeed.toString(),
+            value = weatherState.weatherRealtime.values.windSpeed.toString(),
             units = "м/с",
         ),
     )
@@ -79,62 +79,62 @@ fun CardWeather(
     val weatherOtherList = listOf(
         DataInfoItem(
             name = "Ощуение температуры",
-            value = weatherState.weatherRealtime.data.values.temperatureApparent.toString(),
+            value = weatherState.weatherRealtime.values.temperatureApparent.toString(),
             units = "°C",
         ),
         DataInfoItem(
             name = "Точка росы",
-            value = weatherState.weatherRealtime.data.values.dewPoint.toString(),
+            value = weatherState.weatherRealtime.values.dewPoint.toString(),
             units = "°C",
         ),
         DataInfoItem(
             name = "MAX скорость ветра",
-            value = weatherState.weatherRealtime.data.values.windGust.toString(),
+            value = weatherState.weatherRealtime.values.windGust.toString(),
             units = "м/c",
         ),
         DataInfoItem(
             name = "Интенсив. осадков",
-            value = weatherState.weatherRealtime.data.values.rainIntensity.toString(),
+            value = weatherState.weatherRealtime.values.rainIntensity.toString(),
             units = "мм/ч",
         ),
         DataInfoItem(
             name = "Интенсив. замерших осадков",
-            value = weatherState.weatherRealtime.data.values.freezingRainIntensity.toString(),
+            value = weatherState.weatherRealtime.values.freezingRainIntensity.toString(),
             units = "мм/ч",
         ),
         DataInfoItem(
             name = "Интенсив. снегопада",
-            value = weatherState.weatherRealtime.data.values.snowIntensity.toString(),
+            value = weatherState.weatherRealtime.values.snowIntensity.toString(),
             units = "мм/ч",
         ),
         DataInfoItem(
             name = "Интенсив. мокрого снега",
-            value = weatherState.weatherRealtime.data.values.sleetIntensity.toString(),
+            value = weatherState.weatherRealtime.values.sleetIntensity.toString(),
             units = "мм/ч",
         ),
         DataInfoItem(
             name = "Вероятность выпадения осадков",
-            value = weatherState.weatherRealtime.data.values.precipitationProbability.toString(),
+            value = weatherState.weatherRealtime.values.precipitationProbability.toString(),
             units = "%",
         ),
         DataInfoItem(
             name = "Видимость",
-            value = weatherState.weatherRealtime.data.values.visibility.toString(),
+            value = weatherState.weatherRealtime.values.visibility.toString(),
             units = "км",
         ),
         DataInfoItem(
             name = "Покрытие облаками",
-            value = weatherState.weatherRealtime.data.values.cloudCover.toString(),
+            value = weatherState.weatherRealtime.values.cloudCover.toString(),
             units = "%",
         ),
         DataInfoItem(
             name = "MIN высота до облаков",
-            value = weatherState.weatherRealtime.data.values.cloudBase.toString(),
+            value = weatherState.weatherRealtime.values.cloudBase.toString(),
             units = "км",
         ),
         DataInfoItem(
             name = "MAX высота до облаков",
-            value = weatherState.weatherRealtime.data.values.cloudCeiling.toString(),
+            value = weatherState.weatherRealtime.values.cloudCeiling.toString(),
             units = "км",
         ),
     )
@@ -179,7 +179,7 @@ fun CardWeather(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "Обновлено: ${weatherState.weatherRealtime.data.date} ${weatherState.weatherRealtime.data.time}",
+                text = "Обновлено: ${weatherState.weatherRealtime.date} ${weatherState.weatherRealtime.time}",
                 color = Color.Black,
                 fontSize = 14.sp,
             )

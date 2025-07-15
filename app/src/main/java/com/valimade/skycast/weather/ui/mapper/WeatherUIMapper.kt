@@ -1,13 +1,11 @@
 package com.valimade.skycast.weather.ui.mapper
 
 import com.valimade.skycast.weather.domain.model.WeatherInform
-import com.valimade.skycast.weather.domain.model.realtime.WeatherRealtime
 import com.valimade.skycast.weather.domain.model.WeatherValues
 import com.valimade.skycast.weather.domain.model.forecast.WeatherForecast
 import com.valimade.skycast.weather.domain.model.forecast.WeatherTimelines
 import com.valimade.skycast.weather.ui.model.forecast.WeatherForecastUI
 import com.valimade.skycast.weather.ui.model.forecast.WeatherTimelinesUI
-import com.valimade.skycast.weather.ui.model.realtime.WeatherRealtimeUI
 import com.valimade.skycast.weather.ui.model.WeatherInformUI
 import com.valimade.skycast.weather.ui.model.WeatherValuesUI
 import java.time.Instant
@@ -30,13 +28,7 @@ object WeatherUIMapper {
         )
     }
 
-    fun weatherRealtimeDomainToUI(weatherRealtime: WeatherRealtime): WeatherRealtimeUI {
-        return WeatherRealtimeUI(
-            data = weatherInformDomainToUI(weatherRealtime.data),
-        )
-    }
-
-    private fun weatherInformDomainToUI(weatherInform: WeatherInform): WeatherInformUI {
+    fun weatherInformDomainToUI(weatherInform: WeatherInform): WeatherInformUI {
         return WeatherInformUI(
             date = timeFormat(weatherInform.time)[0],
             time = timeFormat(weatherInform.time)[1],

@@ -1,12 +1,10 @@
 package com.valimade.skycast.weather.data.mapper
 
 import com.valimade.skycast.weather.data.model.WeatherInformData
-import com.valimade.skycast.weather.data.model.realtime.WeatherRealtimeData
 import com.valimade.skycast.weather.data.model.WeatherValuesData
 import com.valimade.skycast.weather.data.model.forecast.WeatherForecastData
 import com.valimade.skycast.weather.data.model.forecast.WeatherTimelinesData
 import com.valimade.skycast.weather.domain.model.WeatherInform
-import com.valimade.skycast.weather.domain.model.realtime.WeatherRealtime
 import com.valimade.skycast.weather.domain.model.WeatherValues
 import com.valimade.skycast.weather.domain.model.forecast.WeatherForecast
 import com.valimade.skycast.weather.domain.model.forecast.WeatherTimelines
@@ -27,13 +25,7 @@ object WeatherDataMapper {
         )
     }
 
-    fun weatherRealtimeDataToDomain(weatherRealtime: WeatherRealtimeData): WeatherRealtime {
-        return WeatherRealtime(
-            data = weatherInformDataToDomain(weatherRealtime.data),
-        )
-    }
-
-    private fun weatherInformDataToDomain(weatherInform: WeatherInformData): WeatherInform {
+    fun weatherInformDataToDomain(weatherInform: WeatherInformData): WeatherInform {
         return WeatherInform(
             time = weatherInform.time,
             values = weatherValuesDataToDomain(weatherInform.values),

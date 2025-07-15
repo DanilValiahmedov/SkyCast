@@ -2,15 +2,17 @@ package com.valimade.skycast.weather.data.repository
 
 import com.valimade.skycast.weather.data.mapper.WeatherDataMapper
 import com.valimade.skycast.weather.data.mock.WeatherMock
-import com.valimade.skycast.weather.data.model.forecast.WeatherForecastData
-import com.valimade.skycast.weather.data.model.realtime.WeatherRealtimeData
+import com.valimade.skycast.weather.data.model.WeatherInformData
+import com.valimade.skycast.weather.domain.model.WeatherInform
 import com.valimade.skycast.weather.domain.model.forecast.WeatherForecast
-import com.valimade.skycast.weather.domain.model.realtime.WeatherRealtime
 import com.valimade.skycast.weather.domain.repository.WeatherRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.decodeFromJsonElement
 
 class WeatherRepositoryImpl(
     private val httpClient: HttpClient,
@@ -18,21 +20,18 @@ class WeatherRepositoryImpl(
     private val apikey: String,
 ): WeatherRepository{
 
-    override suspend fun realtimeWeather(location: String): WeatherRealtime? {
+    override suspend fun realtimeWeather(location: String): WeatherInform? {
         return try {
-            //Реальная реализаиця
-            /*
-            val responseWeather = httpClient.get("/v4/weather/realtime") {
+            val jsonElement = httpClient.get("/v4/weather/realtime") {
                 parameter("location", location)
                 parameter("apikey", apikey)
-            }.body<WeatherRealtimeData>()
+            }.body<JsonObject>()["data"]
 
-             */
+            val json = Json { ignoreUnknownKeys = true }
 
-            //Моковые данные
-            val responseWeather = WeatherMock.responseRealtime
+            val weatherInform = json.decodeFromJsonElement<WeatherInformData>(jsonElement!!)
 
-             mapper.weatherRealtimeDataToDomain(responseWeather)
+            mapper.weatherInformDataToDomain(weatherInform)
         } catch (e: Exception) {
             null
         }
