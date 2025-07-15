@@ -1,4 +1,4 @@
-package com.valimade.skycast.di
+package com.valimade.skycast
 
 import android.app.Application
 import com.valimade.skycast.geocoding.di.geocodingModule

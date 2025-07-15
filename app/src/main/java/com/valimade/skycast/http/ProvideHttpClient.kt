@@ -1,4 +1,4 @@
-package com.valimade.skycast.di
+package com.valimade.skycast.http
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
