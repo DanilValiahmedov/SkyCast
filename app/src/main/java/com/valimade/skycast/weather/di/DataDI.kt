@@ -1,7 +1,7 @@
 package com.valimade.skycast.weather.di
 
 import com.valimade.skycast.core.utils.ApiKeys
-import com.valimade.skycast.di.nameWeather
+import com.valimade.skycast.di.NameAPI
 import com.valimade.skycast.di.provideHttpClient
 import com.valimade.skycast.weather.data.mapper.WeatherDataMapper
 import com.valimade.skycast.weather.data.repository.WeatherRepositoryImpl
@@ -16,7 +16,7 @@ val dataModule = module {
 
     single<WeatherRepository> {
         WeatherRepositoryImpl(
-            httpClient = provideHttpClient(nameWeather),
+            httpClient = provideHttpClient(NameAPI.WEATHER),
             mapper = get(),
             apikey = ApiKeys.tomorrowApiKey,
         )

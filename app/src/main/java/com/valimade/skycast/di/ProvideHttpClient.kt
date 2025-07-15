@@ -9,19 +9,13 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import org.koin.core.qualifier.StringQualifier
-import org.koin.core.qualifier.named
-
-val nameWeather = named("WEATHER")
-val nameGeocoding = named("GEOCODING")
 
 fun provideHttpClient(
-    nameClient: StringQualifier,
+    nameAPI: NameAPI,
 ): HttpClient {
-    val url = when(nameClient) {
-        nameWeather -> "https://api.tomorrow.io"
-        nameGeocoding -> "https://api.geoapify.com"
-        else -> ""
+    val url = when(nameAPI) {
+        NameAPI.WEATHER -> "https://api.tomorrow.io"
+        NameAPI.GEOCODING  -> "https://api.geoapify.com"
     }
 
     return HttpClient(Android) {

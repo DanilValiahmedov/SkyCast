@@ -1,7 +1,7 @@
 package com.valimade.skycast.geocoding.di
 
 import com.valimade.skycast.core.utils.ApiKeys
-import com.valimade.skycast.di.nameGeocoding
+import com.valimade.skycast.di.NameAPI
 import com.valimade.skycast.di.provideHttpClient
 import com.valimade.skycast.geocoding.data.mapper.GeocodingDataMapper
 import com.valimade.skycast.geocoding.data.repository.GeocodingRepositoryImpl
@@ -16,7 +16,7 @@ val dataModule = module {
 
     single<GeocodingRepository> {
         GeocodingRepositoryImpl(
-            httpClient = provideHttpClient(nameGeocoding),
+            httpClient = provideHttpClient(NameAPI.GEOCODING),
             mapper = get(),
             apiKey = ApiKeys.geoapifyApiKey,
         )
