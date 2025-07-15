@@ -1,14 +1,18 @@
 package com.valimade.skycast.geocoding.data.repository
 
 import com.valimade.skycast.geocoding.data.mapper.GeocodingDataMapper
-import com.valimade.skycast.geocoding.data.mock.GeocodingMock
-import com.valimade.skycast.geocoding.data.model.GeocodingReverseData
-import com.valimade.skycast.geocoding.domain.model.GeocodingReverse
+import com.valimade.skycast.geocoding.data.model.GeocodingPropertiesData
+import com.valimade.skycast.geocoding.domain.model.GeocodingProperties
 import com.valimade.skycast.geocoding.domain.repository.GeocodingRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.decodeFromJsonElement
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
 
 class GeocodingRepositoryImpl(
     private val httpClient: HttpClient,
@@ -18,22 +22,24 @@ class GeocodingRepositoryImpl(
 
     override suspend fun reverseGeocoding(
         lat: Double, lon: Double
-    ): GeocodingReverse? {
+    ): GeocodingProperties? {
         return try {
-            //Реальная реализаиця
-            /*
-            val response = httpClient.get("/v1/geocode/reverse") {
+            val jsonElement = httpClient.get("/v1/geocode/reverse") {
                 parameter("lat", lat)
                 parameter("lon", lon)
                 parameter("apiKey", apiKey)
-            }.body<GeocodingReverseData>()
+            }.body<JsonObject>()["features"]
 
-             */
+            val json = Json { ignoreUnknownKeys = true }
 
-            //Моковые данные
-            val response = GeocodingMock.responseReverse
+            val geocodingProperties = json.decodeFromJsonElement<GeocodingPropertiesData>(
+                jsonElement ?.jsonArray
+                    ?.firstOrNull()
+                    ?.jsonObject
+                    ?.get("properties") ?: error("No properties found")
+            )
 
-            mapper.reverseDataToDomain(response)
+            mapper.propertiesDataToDomain(geocodingProperties)
         } catch(e: Exception) {
             null
         }

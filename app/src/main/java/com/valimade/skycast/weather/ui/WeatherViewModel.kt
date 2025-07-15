@@ -100,11 +100,11 @@ class WeatherViewModel(
             val geocodingDomain = reverseGeocodingUseCase(lat, lon)
             if(geocodingDomain != null) {
 
-                val geocodingUI = geocodingMapper.reverseDomainToUI(geocodingDomain)
+                val geocodingUI = geocodingMapper.propertiesDomainToUI(geocodingDomain)
                 _weatherState.update {
                     it.copy(
                         isLoading = false,
-                        geocodingReverse = geocodingUI
+                        geocodingProperties = geocodingUI
                     )
                 }
 

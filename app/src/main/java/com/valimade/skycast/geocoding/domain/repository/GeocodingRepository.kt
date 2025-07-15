@@ -1,7 +1,7 @@
 package com.valimade.skycast.geocoding.domain.repository
 
-import com.valimade.skycast.geocoding.domain.model.GeocodingReverse
+import com.valimade.skycast.geocoding.domain.model.GeocodingProperties
 
 interface GeocodingRepository {
-    suspend fun reverseGeocoding(lat: Double, lon: Double): GeocodingReverse?
+    suspend fun reverseGeocoding(lat: Double, lon: Double): GeocodingProperties?
 }

@@ -157,9 +157,9 @@ fun CardWeather(
 
         Text(
             text =
-                "${weatherState.geocodingReverse.features[0].properties.city} " +
-                "(${weatherState.geocodingReverse.features[0].properties.state}, " +
-                "${weatherState.geocodingReverse.features[0].properties.country})",
+                "${weatherState.geocodingProperties.city} " +
+                "(${weatherState.geocodingProperties.state}, " +
+                "${weatherState.geocodingProperties.country})",
             color = secondaryColor,
             fontSize = 16.sp,
             textAlign = TextAlign.Center
