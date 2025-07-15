@@ -12,7 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.valimade.skycast.ui.theme.SkyCastTheme
-import com.valimade.skycast.weather.ui.screen.WeatherScreen
+import com.valimade.skycast.weather.ui.WeatherScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

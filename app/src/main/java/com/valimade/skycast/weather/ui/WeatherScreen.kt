@@ -1,4 +1,4 @@
-package com.valimade.skycast.weather.ui.screen
+package com.valimade.skycast.weather.ui
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -32,8 +32,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationServices
 import com.valimade.skycast.R
 import com.valimade.skycast.ui.theme.primaryColor
-import com.valimade.skycast.weather.ui.screenelement.CardWeather
-import com.valimade.skycast.weather.ui.viewmodel.WeatherViewModel
+import com.valimade.skycast.weather.ui.components.CardWeather
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext

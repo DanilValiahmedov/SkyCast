@@ -10,7 +10,6 @@ class App: Application() {
         super.onCreate()
         startKoin {
             modules(
-                httpClientModule,
                 weatherModule,
                 geocodingModule,
             )

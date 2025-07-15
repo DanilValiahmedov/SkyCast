@@ -1,4 +1,4 @@
-package com.valimade.skycast.weather.ui.viewmodel
+package com.valimade.skycast.weather.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
