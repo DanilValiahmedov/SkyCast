@@ -93,11 +93,6 @@ fun CardWeather(
             units = "м/c",
         ),
         DataInfoItem(
-            name = "Интенсив. осадков",
-            value = weatherState.weatherRealtime.values.rainIntensity.toString(),
-            units = "мм/ч",
-        ),
-        DataInfoItem(
             name = "Интенсив. замерших осадков",
             value = weatherState.weatherRealtime.values.freezingRainIntensity.toString(),
             units = "мм/ч",
@@ -226,7 +221,7 @@ fun CardWeather(
 
         if(isForecastWeather) {
             LazyRow {
-                items(weatherState.weatherForecast.timelines.hourly) { weather ->
+                items(weatherState.forecastList) { weather ->
 
                     Column(
                         modifier = Modifier.width(145.dp),

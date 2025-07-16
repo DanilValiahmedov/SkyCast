@@ -2,10 +2,6 @@ package com.valimade.skycast.weather.ui.mapper
 
 import com.valimade.skycast.weather.domain.model.WeatherInform
 import com.valimade.skycast.weather.domain.model.WeatherValues
-import com.valimade.skycast.weather.domain.model.forecast.WeatherForecast
-import com.valimade.skycast.weather.domain.model.forecast.WeatherTimelines
-import com.valimade.skycast.weather.ui.model.forecast.WeatherForecastUI
-import com.valimade.skycast.weather.ui.model.forecast.WeatherTimelinesUI
 import com.valimade.skycast.weather.ui.model.WeatherInformUI
 import com.valimade.skycast.weather.ui.model.WeatherValuesUI
 import java.time.Instant
@@ -13,20 +9,6 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 object WeatherUIMapper {
-
-    fun weatherForecastDomainToUI(weatherForecast: WeatherForecast): WeatherForecastUI {
-        return WeatherForecastUI(
-            timelines = weatherTimelinesDomainToUI(weatherForecast.timelines),
-        )
-    }
-
-    private fun weatherTimelinesDomainToUI(weatherTimelines: WeatherTimelines): WeatherTimelinesUI {
-        return WeatherTimelinesUI(
-            hourly = weatherTimelines.hourly.map {
-                weatherInformDomainToUI(it)
-            },
-        )
-    }
 
     fun weatherInformDomainToUI(weatherInform: WeatherInform): WeatherInformUI {
         return WeatherInformUI(
@@ -58,7 +40,6 @@ object WeatherUIMapper {
             humidity = weatherValues.humidity,
             precipitationProbability = weatherValues.precipitationProbability,
             pressureSurfaceLevel = weatherValues.pressureSurfaceLevel,
-            rainIntensity = weatherValues.rainIntensity,
             sleetIntensity = weatherValues.sleetIntensity,
             snowIntensity = weatherValues.snowIntensity,
             temperature = weatherValues.temperature,

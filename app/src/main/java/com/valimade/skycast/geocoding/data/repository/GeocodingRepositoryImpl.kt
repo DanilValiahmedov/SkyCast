@@ -1,5 +1,6 @@
 package com.valimade.skycast.geocoding.data.repository
 
+import android.util.Log
 import com.valimade.skycast.geocoding.data.mapper.GeocodingDataMapper
 import com.valimade.skycast.geocoding.data.model.GeocodingPropertiesData
 import com.valimade.skycast.geocoding.domain.model.GeocodingProperties
@@ -41,6 +42,7 @@ class GeocodingRepositoryImpl(
 
             mapper.propertiesDataToDomain(geocodingProperties)
         } catch(e: Exception) {
+            Log.e("GeocodingRepository", "reverseGeocoding ${e.message}")
             null
         }
     }

@@ -9,7 +9,6 @@ data class WeatherValuesUI(
     val humidity: Int? = 0,
     val precipitationProbability: Int? = 0,
     val pressureSurfaceLevel: Double? = 0.0,
-    val rainIntensity: Int? = 0,
     val sleetIntensity: Int? = 0,
     val snowIntensity: Int? = 0,
     val temperature: Double? = 0.0,
