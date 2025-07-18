@@ -1,4 +1,4 @@
-package com.valimade.skycast.location.domain.model
+package com.valimade.skycast.permission.domain.model
 
 sealed class PermissionResult {
     object Success : PermissionResult()
