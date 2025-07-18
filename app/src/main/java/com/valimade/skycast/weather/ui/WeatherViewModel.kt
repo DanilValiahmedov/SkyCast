@@ -7,7 +7,7 @@ import com.valimade.skycast.geocoding.ui.mapper.GeocodingUIMapper
 import com.valimade.skycast.weather.domain.usecase.ForecastWeatherUseCase
 import com.valimade.skycast.weather.domain.usecase.RealtimeWeatherUseCase
 import com.valimade.skycast.weather.ui.mapper.WeatherUIMapper
-import com.valimade.skycast.weather.ui.model.state.WeatherScreenState
+import com.valimade.skycast.weather.ui.model.WeatherScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -37,11 +37,16 @@ class WeatherViewModel(
             val weatherDomain = realtimeWeatherUseCase(location)
             if(weatherDomain != null) {
 
-                val weatherUI = weatherMapper.weatherInformDomainToUI(weatherDomain)
+                val baseWeather = weatherMapper.baseWeatherDomainToUI(weatherDomain)
+                val additionalWeather = weatherMapper.additionalWeatherDomainToUI(weatherDomain)
+                val dateAndTime = weatherMapper.dateAndTimeDomainToUI(weatherDomain)
+
                 _weatherState.update {
                     it.copy(
                         isLoading = false,
-                        weatherRealtime = weatherUI,
+                        baseWeatherRealtime = baseWeather,
+                        additionalWeatherRealtime = additionalWeather,
+                        dateAndTime = dateAndTime,
                     )
                 }
 
@@ -66,16 +71,16 @@ class WeatherViewModel(
             }
 
             val location = "$lat,$lon"
-            val weatherDomain = forecastWeatherUseCase(location)
-            if(weatherDomain != null) {
+            val forecastDomain = forecastWeatherUseCase(location)
+            if(forecastDomain != null) {
 
-                val weatherUI = weatherDomain.map {
-                    weatherMapper.weatherInformDomainToUI(it)
+                val forecastUI = forecastDomain.map {
+                    weatherMapper.forecastListDomainToUI(it)
                 }
                 _weatherState.update {
                     it.copy(
                         isLoading = false,
-                        forecastList = weatherUI,
+                        forecastList = forecastUI,
                     )
                 }
 
@@ -99,14 +104,14 @@ class WeatherViewModel(
                 )
             }
 
-            val geocodingDomain = reverseGeocodingUseCase(lat, lon)
-            if(geocodingDomain != null) {
+            val locationDomain = reverseGeocodingUseCase(lat, lon)
+            if(locationDomain != null) {
 
-                val geocodingUI = geocodingMapper.propertiesDomainToUI(geocodingDomain)
+                val locationUI = geocodingMapper.propertiesDomainToUI(locationDomain)
                 _weatherState.update {
                     it.copy(
                         isLoading = false,
-                        geocodingProperties = geocodingUI
+                        locationGeocoding = locationUI,
                     )
                 }
 

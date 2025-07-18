@@ -11,7 +11,6 @@ import kotlin.coroutines.suspendCoroutine
 import com.google.android.gms.location.LocationServices
 import com.valimade.skycast.location.domain.model.LocationException
 import com.valimade.skycast.location.domain.model.LocationResponse
-import com.valimade.skycast.location.domain.model.PermissionResult
 
 class LocationRepositoryImpl(
     private val context: Context,

@@ -1,10 +1,13 @@
-package com.valimade.skycast.weather.ui.model.item
+package com.valimade.skycast.weather.ui.model.forecat
 
-data class DataInfoItem(
+import androidx.compose.ui.graphics.Color
+
+data class ForecastWeather(
     val icon: Int = 0,
     val name: String = "",
     val value: String = "",
     val units: String = "",
     val date: String = "",
     val time: String = "",
+    val color: Color = Color.Black,
 )

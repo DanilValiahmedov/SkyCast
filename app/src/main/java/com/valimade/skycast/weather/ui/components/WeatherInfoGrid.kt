@@ -11,11 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.valimade.skycast.weather.ui.model.item.DataInfoItem
+import com.valimade.skycast.weather.ui.model.realtime.BaseWeather
 
 @Composable
 fun WeatherInfoGrid(
-    listItem: List<DataInfoItem>,
+    listItem: List<BaseWeather>,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),

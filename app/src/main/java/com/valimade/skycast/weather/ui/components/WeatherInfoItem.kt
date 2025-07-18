@@ -17,11 +17,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.valimade.skycast.ui.theme.secondaryColor
-import com.valimade.skycast.weather.ui.model.item.DataInfoItem
+import com.valimade.skycast.weather.ui.model.realtime.BaseWeather
 
 @Composable
 fun WeatherInfoItem(
-    item: DataInfoItem,
+    item: BaseWeather,
 ) {
 
     Column(

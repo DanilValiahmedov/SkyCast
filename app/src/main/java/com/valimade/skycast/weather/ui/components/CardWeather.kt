@@ -30,15 +30,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.valimade.skycast.R
-import com.valimade.skycast.ui.theme.humidityColor
-import com.valimade.skycast.ui.theme.pressureColor
 import com.valimade.skycast.ui.theme.primaryColor
 import com.valimade.skycast.ui.theme.secondaryColor
-import com.valimade.skycast.ui.theme.temperatureColor
-import com.valimade.skycast.ui.theme.windColor
-import com.valimade.skycast.weather.ui.model.item.DataInfoItem
-import com.valimade.skycast.weather.ui.model.state.WeatherScreenState
+import com.valimade.skycast.weather.ui.model.WeatherScreenState
 
 @Composable
 fun CardWeather(
@@ -48,91 +42,6 @@ fun CardWeather(
 ) {
     var isCurrentWeather by remember { mutableStateOf(false) }
     var isForecastWeather by remember { mutableStateOf(false) }
-
-    val weatherBaseList = listOf(
-        DataInfoItem(
-            icon = R.drawable.ic_temperature,
-            name = "Температура",
-            value = weatherState.weatherRealtime.values.temperature.toString(),
-            units = "°C",
-        ),
-        DataInfoItem(
-            icon = R.drawable.ic_pressure,
-            name = "Давление",
-            value = weatherState.weatherRealtime.values.pressureSurfaceLevel.toString(),
-            units = "гПа",
-        ),
-        DataInfoItem(
-            icon = R.drawable.ic_humidity,
-            name = "Влажность",
-            value = weatherState.weatherRealtime.values.humidity.toString(),
-            units = "%",
-        ),
-        DataInfoItem(
-            icon = R.drawable.ic_wind,
-            name = "Скорость ветра",
-            value = weatherState.weatherRealtime.values.windSpeed.toString(),
-            units = "м/с",
-        ),
-    )
-
-    val weatherOtherList = listOf(
-        DataInfoItem(
-            name = "Ощуение температуры",
-            value = weatherState.weatherRealtime.values.temperatureApparent.toString(),
-            units = "°C",
-        ),
-        DataInfoItem(
-            name = "Точка росы",
-            value = weatherState.weatherRealtime.values.dewPoint.toString(),
-            units = "°C",
-        ),
-        DataInfoItem(
-            name = "MAX скорость ветра",
-            value = weatherState.weatherRealtime.values.windGust.toString(),
-            units = "м/c",
-        ),
-        DataInfoItem(
-            name = "Интенсив. замерших осадков",
-            value = weatherState.weatherRealtime.values.freezingRainIntensity.toString(),
-            units = "мм/ч",
-        ),
-        DataInfoItem(
-            name = "Интенсив. снегопада",
-            value = weatherState.weatherRealtime.values.snowIntensity.toString(),
-            units = "мм/ч",
-        ),
-        DataInfoItem(
-            name = "Интенсив. мокрого снега",
-            value = weatherState.weatherRealtime.values.sleetIntensity.toString(),
-            units = "мм/ч",
-        ),
-        DataInfoItem(
-            name = "Вероятность выпадения осадков",
-            value = weatherState.weatherRealtime.values.precipitationProbability.toString(),
-            units = "%",
-        ),
-        DataInfoItem(
-            name = "Видимость",
-            value = weatherState.weatherRealtime.values.visibility.toString(),
-            units = "км",
-        ),
-        DataInfoItem(
-            name = "Покрытие облаками",
-            value = weatherState.weatherRealtime.values.cloudCover.toString(),
-            units = "%",
-        ),
-        DataInfoItem(
-            name = "MIN высота до облаков",
-            value = weatherState.weatherRealtime.values.cloudBase.toString(),
-            units = "км",
-        ),
-        DataInfoItem(
-            name = "MAX высота до облаков",
-            value = weatherState.weatherRealtime.values.cloudCeiling.toString(),
-            units = "км",
-        ),
-    )
 
     Column(
         modifier = Modifier
@@ -151,10 +60,7 @@ fun CardWeather(
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            text =
-                "${weatherState.geocodingProperties.city} " +
-                "(${weatherState.geocodingProperties.state}, " +
-                "${weatherState.geocodingProperties.country})",
+            text = weatherState.locationGeocoding,
             color = secondaryColor,
             fontSize = 16.sp,
             textAlign = TextAlign.Center
@@ -162,7 +68,7 @@ fun CardWeather(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        WeatherInfoGrid(listItem = weatherBaseList)
+        WeatherInfoGrid(listItem = weatherState.baseWeatherRealtime)
 
         Row(
             modifier = Modifier
@@ -174,7 +80,7 @@ fun CardWeather(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "Обновлено: ${weatherState.weatherRealtime.date} ${weatherState.weatherRealtime.time}",
+                text = "Обновлено: ${weatherState.dateAndTime}",
                 color = Color.Black,
                 fontSize = 14.sp,
             )
@@ -203,7 +109,7 @@ fun CardWeather(
         Spacer(modifier = Modifier.height(8.dp))
 
         if (isCurrentWeather) {
-            weatherOtherList.map{
+            weatherState.additionalWeatherRealtime.map{
                 FullWeatherItem(item = it)
             }
         }
@@ -221,67 +127,18 @@ fun CardWeather(
 
         if(isForecastWeather) {
             LazyRow {
-                items(weatherState.forecastList) { weather ->
+                items(weatherState.forecastList) { forecast ->
 
                     Column(
                         modifier = Modifier.width(145.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        ForecastCard(
-                            item = DataInfoItem(
-                                icon = R.drawable.ic_temperature,
-                                name = "Температура",
-                                value = weather.values.temperature.toString(),
-                                units = "°C",
-                                date = weather.date,
-                                time = weather.time,
-                            ),
-                            color = temperatureColor,
-                        )
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        ForecastCard(
-                            item = DataInfoItem(
-                                icon = R.drawable.ic_pressure,
-                                name = "Давление",
-                                value = weather.values.pressureSurfaceLevel.toString(),
-                                units = "гПа",
-                                date = weather.date,
-                                time = weather.time,
-                            ),
-                            color = pressureColor,
-                        )
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        ForecastCard(
-                            item = DataInfoItem(
-                                icon = R.drawable.ic_humidity,
-                                name = "Влажность",
-                                value = weather.values.humidity.toString(),
-                                units = "%",
-                                date = weather.date,
-                                time = weather.time,
-                            ),
-                            color = humidityColor,
-                        )
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        ForecastCard(
-                            item = DataInfoItem(
-                                icon = R.drawable.ic_wind,
-                                name = "Скорость ветра",
-                                value = weather.values.windSpeed.toString(),
-                                units = "м/с",
-                                date = weather.date,
-                                time = weather.time,
-                            ),
-                            color = windColor,
-                        )
-
-                        Spacer(modifier = Modifier.height(8.dp))
+                        forecast.forecast.forEach {
+                            ForecastCard(
+                                item = it
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                        }
 
                     }
                     Spacer(modifier = Modifier.width(8.dp))
