@@ -1,6 +1,5 @@
 package com.valimade.skycast.weather.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.valimade.skycast.geocoding.domain.usecase.ReverseGeocodingUseCase
@@ -32,7 +31,6 @@ class WeatherViewModel(
 
     init {
         getLocation()
-        if (checkValidLocation()) startApp()
     }
 
     fun getPermission(isPermission: Boolean) {
@@ -59,17 +57,27 @@ class WeatherViewModel(
                     _weatherState.update {
                         it.copy(location = location)
                     }
+
+                    if (_weatherState.value.isFirstLaunch) {
+                        startApp()
+                    } else {
+                        _weatherState.update {
+                            it.copy(isLoading = false)
+                        }
+                    }
                 }
                 .onFailure { e ->
                     when (e) {
                         is PermissionException -> _weatherState.update {
                             it.copy(
+                                isLoading = false,
                                 isPermission = false
                             )
                         }
 
                         is LocationException -> _weatherState.update {
                             it.copy(
+                                isLoading = false,
                                 isError = true,
                                 errorMessage = "Ошибка при получении геолокации",
                             )
@@ -77,6 +85,7 @@ class WeatherViewModel(
 
                         else -> _weatherState.update {
                             it.copy(
+                                isLoading = false,
                                 isError = true,
                                 errorMessage = "Неизвестная ошибка: ${e.message}",
                             )
@@ -84,18 +93,10 @@ class WeatherViewModel(
                     }
                 }
 
-            _weatherState.update {
-                it.copy(isLoading = false)
-            }
         }
     }
 
     fun startApp() {
-        _weatherState.update {
-            it.copy(
-                isLoading = true,
-            )
-        }
         viewModelScope.launch {
             getRealtimeWeather()
             getForecastWeather()

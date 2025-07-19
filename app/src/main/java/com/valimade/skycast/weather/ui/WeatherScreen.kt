@@ -1,7 +1,6 @@
 package com.valimade.skycast.weather.ui
 
 import android.Manifest
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -38,7 +37,6 @@ fun WeatherScreen() {
     val viewModel: WeatherViewModel = koinViewModel()
     val weatherState by viewModel.weatherState.collectAsState()
 
-
     // Лаунчер для запроса разрешения
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
@@ -50,14 +48,6 @@ fun WeatherScreen() {
     LaunchedEffect(Unit) {
         if (!weatherState.isPermission) {
             permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-        }
-    }
-
-
-    // API-запросы при первом заходе
-    LaunchedEffect(weatherState.isFirstLaunch) {
-        if (weatherState.location != null && weatherState.isFirstLaunch) {
-            viewModel.startApp()
         }
     }
 
