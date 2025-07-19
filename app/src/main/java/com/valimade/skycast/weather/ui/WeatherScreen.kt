@@ -1,7 +1,7 @@
 package com.valimade.skycast.weather.ui
 
 import android.Manifest
-import android.content.pm.PackageManager
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,23 +19,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
-import com.google.android.gms.location.LocationServices
 import com.valimade.skycast.R
 import com.valimade.skycast.ui.theme.primaryColor
 import com.valimade.skycast.weather.ui.components.CardWeather
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -45,51 +37,33 @@ fun WeatherScreen() {
 
     val viewModel: WeatherViewModel = koinViewModel()
     val weatherState by viewModel.weatherState.collectAsState()
-    var isGetWeather by remember { mutableStateOf(true) }
 
-    val locationClient = remember(context) {
-        LocationServices.getFusedLocationProviderClient(context)
-    }
-
-    var permissionGranted by remember { mutableStateOf(false) }
 
     // Лаунчер для запроса разрешения
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
-        permissionGranted = isGranted
+        viewModel.getPermission(isGranted)
     }
 
-    // Запрос разрешения при первом запуске
+    // Запрос разрешения на геолокацию
     LaunchedEffect(Unit) {
-        val hasPermission = ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
-
-        if (hasPermission) {
-            permissionGranted = true
-        } else {
+        if (!weatherState.isPermission) {
             permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
 
-    // Получение геолокации при наличии разрешения
-    LaunchedEffect(permissionGranted && isGetWeather) {
-        if (permissionGranted && isGetWeather) {
-            isGetWeather = false
-            try {
-                val location = withContext(Dispatchers.IO) {
-                    locationClient.lastLocation.await()
-                }
-                location?.let {
-                    viewModel.getRealtimeWeather(it.latitude, it.longitude)
-                    viewModel.getForecastWeather(it.latitude, it.longitude)
-                    viewModel.getReverseGeocoding(it.latitude, it.longitude)
-                }
-            } catch (e: Exception) {
-                Toast.makeText(context, "Ошибка при получении геолокации", Toast.LENGTH_SHORT).show()
-            }
+
+    // API-запросы при первом заходе
+    LaunchedEffect(weatherState.isFirstLaunch) {
+        if (weatherState.location != null && weatherState.isFirstLaunch) {
+            viewModel.startApp()
+        }
+    }
+
+    LaunchedEffect(weatherState.isError) {
+        if (weatherState.isError) {
+            Toast.makeText(context, weatherState.errorMessage, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -114,14 +88,12 @@ fun WeatherScreen() {
 
         if(weatherState.isLoading) {
             CircularProgressIndicator(color = primaryColor)
-        } else if(weatherState.isError) {
-            Toast.makeText(context, "Возникла ошибка, попробуйте позже", Toast.LENGTH_SHORT).show()
-        } else {
+        }  else {
             CardWeather(
                 weatherState = weatherState,
                 nameCard = "Текущее положение: ",
                 onUpdate = {
-                    isGetWeather = true
+                    viewModel.replayApp()
                 }
             )
         }

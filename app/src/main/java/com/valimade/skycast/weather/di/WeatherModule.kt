@@ -42,6 +42,7 @@ val weatherModule = module {
             reverseGeocodingUseCase = get(),
             weatherMapper = get(),
             geocodingMapper = get(),
+            getLocationUseCase = get(),
         )
     }
 
