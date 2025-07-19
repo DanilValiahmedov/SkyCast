@@ -19,10 +19,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,10 +35,12 @@ import com.valimade.skycast.weather.ui.model.WeatherScreenState
 fun CardWeather(
     weatherState: WeatherScreenState,
     nameCard: String,
+    isCurrentWeather: Boolean,
+    currentWeatherClick: () -> Unit,
+    isForecastWeather: Boolean,
+    forecastWeatherClick: () -> Unit,
     onUpdate: () -> Unit,
 ) {
-    var isCurrentWeather by remember { mutableStateOf(false) }
-    var isForecastWeather by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -101,9 +100,7 @@ fun CardWeather(
             isPressed = isCurrentWeather,
             textWhenOpen = "Скрыть текущую погоду",
             textWhenClosed = "Подробнее про текущую погоду",
-            onClick = {
-                isCurrentWeather = !isCurrentWeather
-            }
+            onClick = { currentWeatherClick() }
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -118,9 +115,7 @@ fun CardWeather(
             isPressed = isForecastWeather,
             textWhenOpen = "Скрыть прогноз погоды",
             textWhenClosed = "Подробнее про прогноз погоды",
-            onClick = {
-                isForecastWeather = !isForecastWeather
-            }
+            onClick = { forecastWeatherClick() }
         )
 
         Spacer(modifier = Modifier.height(8.dp))

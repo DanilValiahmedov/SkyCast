@@ -141,6 +141,22 @@ class WeatherViewModel(
         }
     }
 
+    fun clickCurrentWeather() {
+        _weatherState.update {
+            it.copy(
+                isCurrentWeather = !_weatherState.value.isCurrentWeather
+            )
+        }
+    }
+
+    fun clickForecastWeather() {
+        _weatherState.update {
+            it.copy(
+                isForecastWeather = !_weatherState.value.isForecastWeather
+            )
+        }
+    }
+
     private suspend fun getRealtimeWeather() {
         if (checkValidLocation()) {
             val location =

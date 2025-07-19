@@ -82,9 +82,11 @@ fun WeatherScreen() {
             CardWeather(
                 weatherState = weatherState,
                 nameCard = "Текущее положение: ",
-                onUpdate = {
-                    viewModel.replayApp()
-                }
+                isCurrentWeather = weatherState.isCurrentWeather,
+                currentWeatherClick = { viewModel.clickCurrentWeather() },
+                isForecastWeather = weatherState.isForecastWeather,
+                forecastWeatherClick = { viewModel.clickForecastWeather() },
+                onUpdate = { viewModel.replayApp() },
             )
         }
     }
