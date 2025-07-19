@@ -10,6 +10,7 @@ import com.valimade.skycast.permission.domain.model.PermissionException
 import com.valimade.skycast.weather.domain.usecase.ForecastWeatherUseCase
 import com.valimade.skycast.weather.domain.usecase.RealtimeWeatherUseCase
 import com.valimade.skycast.weather.ui.mapper.WeatherUIMapper
+import com.valimade.skycast.weather.ui.model.WeatherIntent
 import com.valimade.skycast.weather.ui.model.WeatherScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,7 +34,16 @@ class WeatherViewModel(
         getLocation()
     }
 
-    fun getPermission(isPermission: Boolean) {
+    fun sendIntent(intent: WeatherIntent) {
+        when(intent) {
+            is WeatherIntent.Permission -> getPermission(intent.isPermission)
+            is WeatherIntent.Replay -> replayApp()
+            is WeatherIntent.CurrentWeather -> clickCurrentWeather()
+            is WeatherIntent.ForecastWeather -> clickForecastWeather()
+        }
+    }
+
+    private fun getPermission(isPermission: Boolean) {
         _weatherState.update {
             it.copy(
                 isPermission = isPermission,
@@ -44,7 +54,7 @@ class WeatherViewModel(
         }
     }
 
-    fun getLocation() {
+    private fun getLocation() {
         _weatherState.update {
             it.copy(isLoading = true)
         }
@@ -96,7 +106,7 @@ class WeatherViewModel(
         }
     }
 
-    fun startApp() {
+    private fun startApp() {
         viewModelScope.launch {
             getRealtimeWeather()
             getForecastWeather()
@@ -112,7 +122,7 @@ class WeatherViewModel(
 
     }
 
-    fun replayApp() {
+    private fun replayApp() {
         _weatherState.update {
             it.copy(
                 isLoading = true,
@@ -138,22 +148,6 @@ class WeatherViewModel(
                     errorMessage = "Ошибка при повторном запросе",
                 )
             }
-        }
-    }
-
-    fun clickCurrentWeather() {
-        _weatherState.update {
-            it.copy(
-                isCurrentWeather = !_weatherState.value.isCurrentWeather
-            )
-        }
-    }
-
-    fun clickForecastWeather() {
-        _weatherState.update {
-            it.copy(
-                isForecastWeather = !_weatherState.value.isForecastWeather
-            )
         }
     }
 
@@ -265,6 +259,22 @@ class WeatherViewModel(
     private fun checkValidLocation(): Boolean {
         val location = _weatherState.value.location
         return location?.lat != null && location.lon != null
+    }
+
+    private fun clickCurrentWeather() {
+        _weatherState.update {
+            it.copy(
+                showCurrentWeather = !_weatherState.value.showCurrentWeather
+            )
+        }
+    }
+
+    private fun clickForecastWeather() {
+        _weatherState.update {
+            it.copy(
+                showForecastWeather = !_weatherState.value.showForecastWeather
+            )
+        }
     }
 
 }

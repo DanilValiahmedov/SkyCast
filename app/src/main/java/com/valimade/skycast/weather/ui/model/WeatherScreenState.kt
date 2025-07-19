@@ -19,8 +19,8 @@ data class WeatherScreenState (
     val dateAndTime: String = "",
     val locationGeocoding: String = "",
 
-    val isCurrentWeather: Boolean = false,
-    val isForecastWeather: Boolean = false,
+    val showCurrentWeather: Boolean = false,
+    val showForecastWeather: Boolean = false,
 
     val isError: Boolean = false,
     val errorMessage: String = "Произошла ошибка",

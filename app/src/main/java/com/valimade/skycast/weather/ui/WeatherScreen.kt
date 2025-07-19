@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.valimade.skycast.R
 import com.valimade.skycast.ui.theme.primaryColor
 import com.valimade.skycast.weather.ui.components.CardWeather
+import com.valimade.skycast.weather.ui.model.WeatherIntent
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -41,7 +42,7 @@ fun WeatherScreen() {
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
-        viewModel.getPermission(isGranted)
+        viewModel.sendIntent(WeatherIntent.Permission(isGranted))
     }
 
     // Запрос разрешения на геолокацию
@@ -82,11 +83,11 @@ fun WeatherScreen() {
             CardWeather(
                 weatherState = weatherState,
                 nameCard = "Текущее положение: ",
-                isCurrentWeather = weatherState.isCurrentWeather,
-                currentWeatherClick = { viewModel.clickCurrentWeather() },
-                isForecastWeather = weatherState.isForecastWeather,
-                forecastWeatherClick = { viewModel.clickForecastWeather() },
-                onUpdate = { viewModel.replayApp() },
+                isCurrentWeather = weatherState.showCurrentWeather,
+                currentWeatherClick = { viewModel.sendIntent(WeatherIntent.CurrentWeather) },
+                isForecastWeather = weatherState.showForecastWeather,
+                forecastWeatherClick = { viewModel.sendIntent(WeatherIntent.ForecastWeather)  },
+                onUpdate = { viewModel.sendIntent(WeatherIntent.Replay) },
             )
         }
     }
