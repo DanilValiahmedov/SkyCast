@@ -10,6 +10,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.jsonArray
@@ -37,12 +38,44 @@ class GeocodingRepositoryImpl(
                 jsonElement ?.jsonArray
                     ?.firstOrNull()
                     ?.jsonObject
-                    ?.get("properties") ?: error("No properties found")
+                    ?.get("properties") ?: return null
             )
 
             mapper.propertiesDataToDomain(geocodingProperties)
         } catch(e: Exception) {
             Log.e("GeocodingRepository", "reverseGeocoding ${e.message}")
+            null
+        }
+    }
+
+    override suspend fun forwardGeocoding(text: String): List<GeocodingProperties>? {
+        return try {
+            val jsonElement = httpClient.get("/v1/geocode/search") {
+                parameter("text", text)
+                parameter("apiKey", apiKey)
+            }.body<JsonObject>()["features"] ?: return null
+
+            val json = Json { ignoreUnknownKeys = true }
+
+            val features = jsonElement.jsonArray
+
+            features.mapNotNull { feature ->
+                val obj = feature.jsonObject
+
+                val propertiesJson = obj["properties"] ?: return@mapNotNull null
+                val geometryJson = obj["geometry"]?.jsonObject
+                val coordinatesJson = geometryJson?.get("coordinates") ?: return@mapNotNull null
+
+                val props = json.decodeFromJsonElement<GeocodingPropertiesData>(propertiesJson)
+                val coords = json.decodeFromJsonElement<List<Double>>(coordinatesJson)
+
+                mapper.propertiesDataToDomain(
+                    props.copy(coordinates = coords)
+                )
+            }
+
+        } catch (e: Exception) {
+            Log.e("GeocodingRepository", "forwardGeocoding error: ${e.message}")
             null
         }
     }

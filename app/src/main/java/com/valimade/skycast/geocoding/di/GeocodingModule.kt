@@ -6,6 +6,7 @@ import com.valimade.skycast.http.provideHttpClient
 import com.valimade.skycast.geocoding.data.mapper.GeocodingDataMapper
 import com.valimade.skycast.geocoding.data.repository.GeocodingRepositoryImpl
 import com.valimade.skycast.geocoding.domain.repository.GeocodingRepository
+import com.valimade.skycast.geocoding.domain.usecase.ForwardGeocodingUseCase
 import com.valimade.skycast.geocoding.domain.usecase.ReverseGeocodingUseCase
 import com.valimade.skycast.geocoding.ui.mapper.GeocodingUIMapper
 import org.koin.core.module.dsl.singleOf
@@ -26,6 +27,8 @@ val geocodingModule = module {
 
     //domain-слой
     singleOf(::ReverseGeocodingUseCase)
+
+    singleOf(::ForwardGeocodingUseCase)
 
     //ui-слой
     single { GeocodingUIMapper }

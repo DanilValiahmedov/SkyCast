@@ -8,4 +8,5 @@ data class GeocodingPropertiesData(
     @SerialName("country") val country: String,
     @SerialName("state") val state: String,
     @SerialName("city") val city: String,
+    @SerialName("coordinates") val coordinates: List<Double> = emptyList(),
 )

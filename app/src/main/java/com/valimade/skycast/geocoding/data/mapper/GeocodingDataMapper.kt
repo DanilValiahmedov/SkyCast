@@ -10,6 +10,7 @@ object GeocodingDataMapper {
             country = properties.country,
             state = properties.state,
             city = properties.city,
+            coordinates = properties.coordinates,
         )
     }
 

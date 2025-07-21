@@ -14,7 +14,7 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.jsonObject
 
-class WeatherRepositoryImpl(
+class  WeatherRepositoryImpl(
     private val httpClient: HttpClient,
     private val mapper: WeatherDataMapper,
     private val apikey: String,
@@ -49,7 +49,7 @@ class WeatherRepositoryImpl(
 
             val hourlyList = jsonElement
                 ?.jsonObject
-                ?.get("hourly") ?: error("No hourly found")
+                ?.get("hourly") ?: return null
 
             val weatherList = json.decodeFromJsonElement<List<WeatherInformData>>(hourlyList)
 
