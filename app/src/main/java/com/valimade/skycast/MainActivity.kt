@@ -11,8 +11,8 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.valimade.skycast.navigation.AppNav
 import com.valimade.skycast.ui.theme.SkyCastTheme
-import com.valimade.skycast.weather.ui.WeatherScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
                         .windowInsetsPadding(WindowInsets.systemBars),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    WeatherScreen()
+                    AppNav()
                 }
             }
         }
