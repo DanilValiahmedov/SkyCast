@@ -26,7 +26,13 @@ fun AppNav() {
         onBack = { backStack.removeLastOrNull() },
         entryProvider = { key ->
             when (key) {
-                Weather -> NavEntry(key) { WeatherScreen() }
+                Weather -> NavEntry(key) {
+                    WeatherScreen(
+                        onNavigateToAdd = {
+                            backStack += Add
+                        }
+                    )
+                }
                 Add -> NavEntry(key) { AddScreen() }
                 else -> NavEntry(key) { Text("Unknown route") }
             }
