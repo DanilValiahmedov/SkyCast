@@ -1,4 +1,4 @@
-CREATE TABLE selectedPlacesDB (
+CREATE TABLE selected_place(
   id INTEGER PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
   latitude REAL NOT NULL,
@@ -6,12 +6,12 @@ CREATE TABLE selectedPlacesDB (
 );
 
 selectAll:
-SELECT * FROM selectedPlacesDB;
+SELECT * FROM selected_place;
 
 insert:
-INSERT INTO selectedPlacesDB(id, name, latitude, longitude)
+INSERT INTO selected_place(id, name, latitude, longitude)
 VALUES (?, ?, ?, ?);
 
 deleteById:
-DELETE FROM selectedPlacesDB
-WHERE id = ?;
+DELETE FROM selected_place
+WHERE id = ?; 
