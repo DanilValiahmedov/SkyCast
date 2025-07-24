@@ -4,16 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.sqldelight)
     kotlin("plugin.serialization") version "2.0.21"
-}
-
-sqldelight {
-    databases {
-        create("PlacesDB") {
-            packageName.set("com.valimade.skycast.database")
-        }
-    }
 }
 
 val localProperties = Properties()
@@ -62,9 +53,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.android.driver)
-    implementation(libs.coroutines.extensions)
-
     implementation(libs.androidx.navigation3.runtime)
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
