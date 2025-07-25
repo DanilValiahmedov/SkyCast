@@ -6,8 +6,8 @@ import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import com.valimade.skycast.weather.ui.AddScreen
-import com.valimade.skycast.weather.ui.WeatherScreen
+import com.valimade.skycast.weather.ui.screen.AddScreen
+import com.valimade.skycast.weather.ui.screen.WeatherScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -19,7 +19,7 @@ data object Add: NavKey
 @Composable
 fun AppNav() {
 
-    val backStack = rememberNavBackStack(Weather)
+    val backStack = rememberNavBackStack(Add)
 
     NavDisplay(
         backStack = backStack,

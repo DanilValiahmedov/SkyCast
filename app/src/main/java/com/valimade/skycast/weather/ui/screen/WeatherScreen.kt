@@ -1,4 +1,4 @@
-package com.valimade.skycast.weather.ui
+package com.valimade.skycast.weather.ui.screen
 
 import android.Manifest
 import android.widget.Toast
@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.valimade.skycast.R
 import com.valimade.skycast.ui.theme.primaryColor
 import com.valimade.skycast.ui.theme.secondaryColor
+import com.valimade.skycast.weather.ui.WeatherViewModel
 import com.valimade.skycast.weather.ui.components.CardWeather
 import com.valimade.skycast.weather.ui.model.WeatherIntent
 import org.koin.androidx.compose.koinViewModel
