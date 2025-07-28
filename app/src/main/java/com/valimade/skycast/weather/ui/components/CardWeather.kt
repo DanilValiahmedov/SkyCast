@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.valimade.skycast.ui.theme.primaryColor
 import com.valimade.skycast.ui.theme.secondaryColor
-import com.valimade.skycast.weather.ui.model.WeatherScreenState
+import com.valimade.skycast.weather.ui.model.state.WeatherScreenState
 
 @Composable
 fun CardWeather(

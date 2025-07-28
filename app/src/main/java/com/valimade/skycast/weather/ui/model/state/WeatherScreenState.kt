@@ -1,4 +1,4 @@
-package com.valimade.skycast.weather.ui.model
+package com.valimade.skycast.weather.ui.model.state
 
 import com.valimade.skycast.location.domain.model.LocationResponse
 import com.valimade.skycast.weather.ui.model.forecat.ForecastList

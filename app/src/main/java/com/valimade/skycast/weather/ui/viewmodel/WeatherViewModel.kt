@@ -1,4 +1,4 @@
-package com.valimade.skycast.weather.ui
+package com.valimade.skycast.weather.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +11,7 @@ import com.valimade.skycast.weather.domain.usecase.ForecastWeatherUseCase
 import com.valimade.skycast.weather.domain.usecase.RealtimeWeatherUseCase
 import com.valimade.skycast.weather.ui.mapper.WeatherUIMapper
 import com.valimade.skycast.weather.ui.model.WeatherIntent
-import com.valimade.skycast.weather.ui.model.WeatherScreenState
+import com.valimade.skycast.weather.ui.model.state.WeatherScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update

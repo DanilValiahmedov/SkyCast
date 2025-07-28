@@ -8,8 +8,9 @@ import com.valimade.skycast.weather.data.repository.WeatherRepositoryImpl
 import com.valimade.skycast.weather.domain.repository.WeatherRepository
 import com.valimade.skycast.weather.domain.usecase.ForecastWeatherUseCase
 import com.valimade.skycast.weather.domain.usecase.RealtimeWeatherUseCase
-import com.valimade.skycast.weather.ui.WeatherViewModel
+import com.valimade.skycast.weather.ui.viewmodel.WeatherViewModel
 import com.valimade.skycast.weather.ui.mapper.WeatherUIMapper
+import com.valimade.skycast.weather.ui.viewmodel.AddViewModel
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -43,6 +44,13 @@ val weatherModule = module {
             weatherMapper = get(),
             geocodingMapper = get(),
             getLocationUseCase = get(),
+        )
+    }
+
+    viewModel<AddViewModel>{
+        AddViewModel(
+            forwardGeocodingUseCase = get(),
+            geocodingMapper = get(),
         )
     }
 
