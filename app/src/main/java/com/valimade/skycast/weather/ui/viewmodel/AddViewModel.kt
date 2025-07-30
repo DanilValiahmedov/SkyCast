@@ -18,33 +18,43 @@ class AddViewModel(
     private val _addState = MutableStateFlow(AddScreenState())
     val addState: StateFlow<AddScreenState> = _addState
 
-    fun getForwardGeocoding(namePlaces: String) {
+    fun changeRequestText(newText: String) {
         _addState.update {
             it.copy(
-                isLoading = true,
+                requestText = newText
             )
         }
-        viewModelScope.launch {
-            val forwardDomain = forwardGeocodingUseCase(text = namePlaces)
-            if (forwardDomain != null) {
+    }
 
-                val forwardUI = forwardDomain.map{
-                    geocodingMapper.propertiesDomainToUI(it)
-                }
-                _addState.update {
-                    it.copy(
-                        isLoading = false,
-                        namePlaces = forwardUI,
-                    )
-                }
+    fun getForwardGeocoding() {
+        if(_addState.value.requestText.length % 3 == 0) {
+            _addState.update {
+                it.copy(
+                    isLoading = true,
+                )
+            }
+            viewModelScope.launch {
+                val forwardDomain = forwardGeocodingUseCase(text = _addState.value.requestText)
+                if (forwardDomain != null) {
 
-            } else {
-                _addState.update {
-                    it.copy(
-                        isLoading = false,
-                        isError = true,
-                        errorMessage = "Ошибка при поиске адреса",
-                    )
+                    val forwardUI = forwardDomain.map{
+                        geocodingMapper.propertiesDomainToUI(it)
+                    }
+                    _addState.update {
+                        it.copy(
+                            isLoading = false,
+                            namePlaces = forwardUI,
+                        )
+                    }
+
+                } else {
+                    _addState.update {
+                        it.copy(
+                            isLoading = false,
+                            isError = true,
+                            errorMessage = "Ошибка при поиске адреса",
+                        )
+                    }
                 }
             }
         }
